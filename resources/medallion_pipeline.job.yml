@@ -1,0 +1,48 @@
+resources:
+  jobs:
+    medallion_pipeline:
+      name: medallion_pipeline
+      tasks:
+        - task_key: Bronze_book_store
+          notebook_task:
+            notebook_path: ../notebooks/bronze.ipynb
+            base_parameters:
+              environment: "${var.environment}"
+            source: WORKSPACE
+          existing_cluster_id: 0813-075425-ixi1v92q
+          libraries:
+            - whl: ../dist/medallion_dab-0.0.3.3-py3-none-any.whl
+        - task_key: Bronze_sql_book_store
+          notebook_task:
+            notebook_path: ../notebooks/bronze_sql.ipynb
+            base_parameters:
+              environment: "${var.environment}"
+            source: WORKSPACE
+          existing_cluster_id: 0813-075425-ixi1v92q
+          libraries:
+            - whl: ../dist/medallion_dab-0.0.3.3-py3-none-any.whl          
+        - task_key: Silver_book_store
+          depends_on:
+            - task_key: Bronze_book_store
+            - task_key: Bronze_sql_book_store
+          notebook_task:
+            notebook_path: ../notebooks/silver.ipynb
+            base_parameters:
+              environment: "${var.environment}"
+            source: WORKSPACE
+          existing_cluster_id: 0813-075425-ixi1v92q
+          libraries:
+            - whl: ../dist/medallion_dab-0.0.3.3-py3-none-any.whl
+        - task_key: Silver_join_book_store
+          depends_on:
+            - task_key: Silver_book_store
+          notebook_task:
+            notebook_path: ../notebooks/silver_join_enrichment.ipynb
+            base_parameters:
+              environment: "${var.environment}"
+            source: WORKSPACE
+          existing_cluster_id: 0813-075425-ixi1v92q  
+          libraries:
+            - whl: ../dist/medallion_dab-0.0.3.3-py3-none-any.whl
+      queue:
+        enabled: true

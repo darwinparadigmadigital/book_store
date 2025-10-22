@@ -1,0 +1,27 @@
+[
+  {
+    "book_id": 1,
+    "title": "El Quijote",
+    "author": "Cervantes",
+    "price": 35.5
+  },
+  {
+    "book_id": 2,
+    "title": "Cien Años de Soledad",
+    "author": "García Márquez",
+    "price": 42.0
+  },
+  {
+    "book_id": 3,
+    "title": "La Sombra del Viento",
+    "author": "Carlos Ruiz Zafón",
+    "price": 28.0
+  },
+  {
+    "book_id": 4,
+    "title": "Rayuela",
+    "author": "Julio Cortázar",
+    "price": 50.0
+  }
+]
+

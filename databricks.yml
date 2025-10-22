@@ -1,0 +1,36 @@
+# This is a Databricks asset bundle definition for book_store.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: book_store
+
+include:
+  - resources/*.yml
+  - notebooks/*.ipynb
+  - scripts/*.py
+
+variables:
+  environment:
+    default: dev
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    mode: development
+    workspace:
+      host: https://adb-1208448342929866.6.azuredatabricks.net
+      root_path: /Workspace/Users/djgavilanes@paradigmadigital.com/dab_dev/${bundle.name}/${bundle.target}
+
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-1208448342929866.6.azuredatabricks.net
+      # We explicitly specify /Workspace/Users/djgavilanes@paradigmadigital.com to make sure we only have a single copy.
+      root_path: /Workspace/Users/djgavilanes@paradigmadigital.com/dab_prod/${bundle.name}/${bundle.target}
+    permissions:
+      - user_name: djgavilanes@paradigmadigital.com
+        level: CAN_MANAGE
+    run_as:
+      user_name: djgavilanes@paradigmadigital.com

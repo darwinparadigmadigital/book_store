@@ -1,0 +1,3 @@
+target_table,join_table,join_alias,join_type,join_condition,join_source_alias,enriched_table_name
+dev_mayoral.silver_uc_{env}.customers,dev_mayoral.silver_uc_{env}.country,country,inner,customers.iso_code = country.country_code,customers,dev_mayoral.silver_uc_{env}.customers_silver
+dev_mayoral.silver_uc_{env}.orders,dev_mayoral.silver_uc_{env}.customers,customers,inner,orders.customer_id = customers.customer_id,orders,dev_mayoral.silver_uc_{env}.orders_cust_silver

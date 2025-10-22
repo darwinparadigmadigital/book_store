@@ -1,0 +1,29 @@
+resources:
+  jobs:
+    fist_demo_job:
+      name: fist_demo_job
+      tasks:
+        - task_key: first_demo_task
+          notebook_task:
+            notebook_path: ../notebooks/test_notebook.ipynb
+            source: WORKSPACE
+          job_cluster_key: Job_cluster
+      job_clusters:
+        - job_cluster_key: Job_cluster
+          new_cluster:
+            spark_version: 16.4.x-scala2.12
+            azure_attributes:
+              first_on_demand: 1
+              availability: SPOT_WITH_FALLBACK_AZURE
+              spot_bid_max_price: 100
+            node_type_id: Standard_D3_v2
+            spark_env_vars:
+              PYSPARK_PYTHON: /databricks/python3/bin/python3
+            policy_id: 00132CF4D805B4B2
+            data_security_mode: SINGLE_USER
+            runtime_engine: STANDARD
+            kind: CLASSIC_PREVIEW
+            is_single_node: false
+            num_workers: 1
+      queue:
+        enabled: true
